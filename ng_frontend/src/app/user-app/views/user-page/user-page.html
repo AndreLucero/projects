@@ -1,0 +1,73 @@
+<div class="p-24 h-dvh bg-gray-700 min-w-5xl">
+    <div
+        class="h-full flex rounded-xl border-black border-2 overflow-hidden"
+        [class]="`border-${userService.userData?.color}-500`"
+    >
+        
+        <!-- Panel Izquierdo -->
+        <div
+            class="flex flex-col gap-10 items-center p-5 text-white bg-linear-to-b min-w-72"
+            [class]="`from-${userService.userData?.color}-500 to-${userService.userData?.color}-950`"
+        >
+
+            <div class="flex flex-col gap-10 items-center">
+
+                @if( userService.userData?.avatar; as avatar){
+                    <img
+                        [src]="`assets/img/avatars/${avatar}`"
+                        alt="avatar"
+                        class="rounded-full size-24"
+                    >
+                }@else {
+                    <div class="size-24 bg-white rounded-full flex justify-center items-center">
+                        <p class="text-gray-600 text-4xl">{{userService.userData?.alias}}</p>
+                    </div>
+                }
+
+                <div class="flex flex-col items-center grow">
+                    <p class="text-2xl">{{userService.userData?.nombre}}</p>
+                    <p class="text-xs">{{userService.userData?.id}}</p>
+                </div>
+
+            </div>
+
+            <div class="grid w-full">
+
+                <a
+                    [routerLink]="['perfil']"
+                    routerLinkActive="backdrop-brightness-150 text-gray-50"
+                    class="h-96 max-h-12 px-2 flex items-center cursor-pointer rounded-lg hover:backdrop-brightness-125"
+                >Configuración del usuario</a>
+                <a
+                    [routerLink]="['privacidad']"
+                    routerLinkActive="backdrop-brightness-150 text-gray-50"
+                    class="h-96 max-h-12 px-2 flex items-center cursor-pointer rounded-lg hover:backdrop-brightness-125"
+                >Privacidad</a>
+                
+                @if( validRole() ){
+                    <a
+                        [routerLink]="['control']"
+                        routerLinkActive="backdrop-brightness-150 text-gray-50"
+                        class="h-96 max-h-12 px-2 flex items-center cursor-pointer rounded-lg hover:backdrop-brightness-125"
+                    >Control de usuarios</a>
+                }
+
+            </div>
+
+        </div>
+
+
+        <!-- Panel Derecho -->
+        <div
+            class="bg-gray-100 grow p-5 bg-linear-240 text-gray-300"
+            [class]="`from-${userService.userData?.color}-900 to-${userService.userData?.color}-950`"
+        >
+            <router-outlet />
+         </div>
+
+
+    </div>
+</div>
+
+
+<general-speed-dial />

@@ -1,0 +1,26 @@
+<!-- <div
+    class="w-56 h-72 bg-white rounded-xl transition-transform overflow-hidden shadow inset-shadow-sm
+            hover:-translate-y-2 hover:shadow-xl
+            active:animate-ping
+            border-t-10
+    "
+    [class]="appInformation.loginRequired ? 'border-t-orange-400':'border-t-blue-500'"
+> -->
+<div
+    class="w-72 h-96 bg-white dark:bg-black rounded-xl transition-transform overflow-hidden shadow inset-shadow-sm
+            hover:-translate-y-2 hover:shadow-xl
+            active:animate-ping
+            border-t-10
+    "
+    [class]="appInformation.loginRequired ? 'border-t-orange-400':'border-t-blue-500'"
+>
+    <a [routerLink]="[ appInformation.path ]" class="flex flex-col h-full">
+
+        <img [src]="appInformation.srcImage" width="288" height="185" alt="application preview image" class="object-cover">
+
+        <div class="p-5 flex flex-col justify-center items-center gap-2">
+            <strong class="font-semibold">{{appInformation.appName}}</strong>
+            <p class="text-center italic break-all text-sm">http://localhost{{appInformation.path}}</p>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,61 @@
+@if( message.owner === SYSTEM_USER_ID ){
+    <div
+        class="flex items-center text-center my-3 text-gray-400 select-none
+                before:[content:''] before:flex-1 before:border-b-1 before:border-gray-300 before:my-2
+                after:[content:''] after:flex-1 after:border-b-1 after:border-gray-300 after:my-2
+        "
+    >
+        <p class="mx-3">{{ message.text }}</p>
+    </div>
+}
+@else if( message.owner === chatService.currentUserId ){
+
+    <div class="flex mb-4 justify-end items-end">
+        <div 
+            class="mr-2 py-3 px-4 bg-violet-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white max-w-5/6 break-all"
+            [innerHTML]="sanitizeHtml(message.text)"
+        ></div>
+        
+        @if( userData?.avatar; as avatar ){
+            <img 
+                [src]="`assets/img/avatars/${avatar}`"
+                [alt]="avatar"
+                class="rounded-full size-12"
+                [title]="userData?.nombre"
+            >
+        }@else {
+            <div
+                class="shadow inset-shadow-2xs h-12 w-12 p-2 bg-violet-500 rounded-full text-white font-semibold flex items-center justify-center select-none"
+                [title]="userData?.nombre"
+            >{{ userData?.alias }}</div>
+        }
+
+    </div>
+
+}@else {
+    
+    <div class="flex mb-4 justify-start items-end">
+
+        @if( userData?.avatar; as avatar){
+            <img 
+                [src]="`assets/img/avatars/${avatar}`"
+                [alt]="avatar"
+                class="rounded-full size-12"
+                [title]="userData?.nombre"
+            >
+        }@else {
+            <div
+                class="shadow inset-shadow-sm h-12 w-12 p-2 rounded-full text-white font-semibold flex items-center justify-center select-none"
+                [class]="`bg-${userData?.color}-500`"
+                [title]="userData?.nombre"
+            >{{ userData?.alias }}</div>
+
+        }
+
+        <div
+            class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white max-w-5/6 break-all"
+            [innerHTML]="sanitizeHtml(message.text)"
+        ></div>
+    </div>
+
+}

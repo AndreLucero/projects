@@ -1,0 +1,187 @@
+<div class="flex flex-col w-full h-full bg-gray-100 p-5 gap-5">
+    <!-- Header -->
+    <div class="flex justify-between bg-white shadow py-3 px-5 rounded-xl min-w-3xl">
+        <img
+            src="assets/img/agent-call-logo-2.png"
+            alt="agent call logo"
+            width="200"
+            height="60"
+            class="object-contain"
+        >
+
+        <div class="flex flex-col text-gray-400">
+            <span class="text-end text-xl">{{ crmAgentCallService.numempleado || 'SIN DATOS' }}</span>
+            <span class="text-sm">{{ nombre_empleado || 'SIN DATOS' }}</span>
+        </div>
+    </div>
+    
+    <!-- Body -->
+    <div class="grow flex gap-10">
+    
+        <!-- Panel Izquierdo -->
+        <div class="flex flex-col bg-white rounded-xl shadow p-3 gap-10">
+            
+            <div class="flex flex-col gap-5 justify-center items-center w-xs">
+                <h1 class="text-2xl">INDICADORES KPI</h1>
+                @defer{
+                    @if( crmAgentCallService.numempleado$ |async; as numempleado){
+                        <carousel [numempleado]=" numempleado " />
+                    }
+                }@placeholder {
+                    <carousel-skeleton />
+                }@error {
+                    <p>Ocurrió un problema al obtener la informacion del usuario</p>
+                }
+
+            </div>
+
+            @if( crmAgentCallService.numempleado$ | async; as numempleado ){
+                <dataview-fingestion [numempleado]=" numempleado " />
+             }
+
+        </div>
+        
+        <!-- Panel Derecho -->
+        <div class="min-w-md w-full bg-white flex flex-col rounded-xl shadow p-5">
+            
+            <div class="relative ring ring-gray-200 p-4 rounded-md m-5">
+                <span class="absolute -top-3 bg-white left-5 px-4 text-gray-400">Información del usuario</span>
+
+                <div class="flex gap-5 p-5 flex-wrap">
+                    
+                    <p-floatlabel variant="on">
+                        <input [(ngModel)]="clientInformation.nombre" pInputText autocomplete="off" />
+                        <label>Nombre</label>
+                    </p-floatlabel>
+                                        
+                    <p-floatlabel variant="on">
+                        <input [(ngModel)]="clientInformation.apPaterno" pInputText autocomplete="off" />
+                        <label>Apellido Paterno</label>
+                    </p-floatlabel>
+                    
+                    <p-floatlabel variant="on">
+                        <input [(ngModel)]="clientInformation.apMaterno" pInputText autocomplete="off" />
+                        <label>Apellido Materno</label>
+                    </p-floatlabel>
+
+                    <p-floatlabel variant="on">
+                        <p-inputmask [ngModel]="telefono" mask="(999) 999 9999" [disabled]="true" [autoClear]="false"/>
+                        <label>Telefono Entrante</label>
+                    </p-floatlabel>
+
+                    <p-floatlabel variant="on">
+                        <p-inputmask [(ngModel)]="clientInformation.telAdicional" mask="(999) 999 9999" />
+                        <label>Telefono Adicional</label>
+                    </p-floatlabel>
+
+                    
+                    <p-floatlabel variant="on" class="w-full md:w-56">
+                        <p-select
+                            [(ngModel)]="clientInformation.quienContacto"
+                            [options]="['Cliente','Conyuge','Familiar','Otro']"
+                            class="w-full"
+                            [invalid]="!clientInformation.quienContacto && intentoEnviar"
+                            [showClear]="true"
+                        />
+                        <label>¿Quien contactó?</label>
+                    </p-floatlabel>
+
+                </div>
+
+            </div>
+            
+            <div class="relative ring ring-gray-200 p-4 rounded-md m-5">
+                <span class="absolute -top-3 bg-white left-5 px-4 text-gray-400">Datos del telefono</span>
+
+                <div class="flex gap-5 p-5 flex-wrap">
+
+                    
+                    <p-floatlabel variant="on">
+                        <p-inputmask [(ngModel)]="clientInformation.factura" mask="9999-9999999" />
+                        <label>Factura</label>
+                    </p-floatlabel>
+                    
+                    <p-datepicker
+                        [showIcon]="true"
+                        inputId="buttondisplay"
+                        [showOnFocus]="false"
+                        placeholder="Fecha de compra"
+                        dateFormat="dd/mm/yy"
+                        [(ngModel)]="clientInformation.fechaCompra"
+                    />
+                                        
+                    <p-floatlabel variant="on">
+                        <input [(ngModel)]="clientInformation.modelo" pInputText autocomplete="off" />
+                        <label>Modelo</label>
+                    </p-floatlabel>
+                    
+                    <p-floatlabel variant="on">
+                        <input [(ngModel)]="clientInformation.imei" pInputText type="number" class="appearance-none"/>
+                        <label>IMEI</label>
+                    </p-floatlabel>
+
+                </div>
+                
+            </div>
+
+            <div class="grow p-4">
+                <p-tabs [(value)]="tabValue" (valueChange)="resetForm()">
+                    <p-tablist>
+                        @for (tab of tabsOptions; track $index) {
+                            <p-tab [value]="$index">{{ tab }}</p-tab>
+                        }
+                    </p-tablist>
+                </p-tabs>
+
+                <form [formGroup]="formulario" class="flex flex-wrap gap-5 items-start m-6">
+
+                    <p-floatlabel variant="on" class="">
+                        <p-select
+                            formControlName="fingestion"
+                            [options]=" getFingestion() "
+                            class="w-full md:w-56"
+                            [invalid]="formulario.get('fingestion')?.invalid && intentoEnviar"
+                        />
+                        <label>Fin de gestión</label>
+                    </p-floatlabel>
+                    
+                    <p-floatlabel variant="on" class="">
+                        <p-select
+                            formControlName="subfingestion"
+                            [options]="arrSubfingestion"
+                            [filter]="true"
+                            class="w-full md:w-56"
+                            [invalid]="formulario.get('subfingestion')?.invalid && intentoEnviar"
+                        />
+                        <label>Subfin de gestión</label>
+                    </p-floatlabel>
+
+                    <p-floatlabel variant="on">
+                        <textarea formControlName="comentario" pTextarea rows="2" cols="30" style="resize: none" class="h-full"></textarea>
+                        <label>Comentarios</label>
+                    </p-floatlabel>
+
+
+                </form>
+
+            </div>
+
+            <div class="flex justify-end m-5">
+                <button
+                    (click)=" validateForm() "
+                    [disabled]=" formDisable "
+                    class="bg-verde-agent-call px-8 py-1.5 cursor-pointer text-white font-semibold rounded-lg ring-offset-4 not-disabled:ring-emerald-300
+                        hover:ring not-disabled:active:scale-105
+                        disabled:bg-gray-400 disabled:cursor-no-drop
+                    "
+                >Finalizar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<p-toast key="AgentCallCrmViewToast" />

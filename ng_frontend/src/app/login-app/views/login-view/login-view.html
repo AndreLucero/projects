@@ -1,0 +1,195 @@
+<div class="size-full bg-gray-100 flex justify-center items-center font-[Montserrat] relative text-black">
+
+    <div class="w-3xl h-[480px] bg-white relative flex rounded-xl overflow-hidden groups shadow-xl">
+        <!-- Panel Izquierdo -->
+        <form
+            [formGroup]="formLogin"
+            class="w-1/2 p-2 flex flex-col gap-2 justify-center items-center relative"
+            (submit)=" submitLogin() "
+        >
+            <h3 class="text-3xl font-bold mb-10">Iniciar Sesión</h3>
+
+            <div class="grid text-center gap-3 w-full px-12">
+                <p class="text-xs">Administra tus credenciales</p>
+                <input
+                    type="number"
+                    placeholder="# Empleado"
+                    formControlName="empleado"
+                    class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+                >
+                <input
+                    type="password"
+                    placeholder="Contraseña"
+                    formControlName="password"
+                    class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+                    autocomplete="off"
+                >
+            </div>
+            <button
+                type="submit"
+                class="bg-sky-600 text-white px-10 py-2 font-bold rounded-full cursor-pointer not-disabled:active:scale-95 transition-all
+                    disabled:bg-gray-400 disabled:scale-90 disabled:cursor-no-drop
+                "
+                [disabled]=" formLogin.invalid "
+            >Ingresar</button>
+
+
+            <span class="absolute bottom-2 right-3" (click)="dialogVisible = true">
+                <u class="text-xs cursor-pointer">Actualizar Contraseña</u>
+            </span>
+        </form>
+
+        <!-- Panel Derecho -->
+        <form
+            [formGroup]="formSignUp"
+            (submit)=" submitSignUp() "
+            class="w-1/2 p-2 flex flex-col gap-2 justify-center items-center relative"
+        >
+
+            <h3 class="text-3xl font-bold mb-10">Crear cuenta</h3>
+
+            <div class="grid text-center gap-3 w-full px-12">
+                <p class="text-xs">Añade tu información Coppel</p>
+                <input
+                    type="number"
+                    placeholder="# Empleado"
+                    formControlName="empleado"
+                    class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+                >
+                <input
+                    type="text"
+                    placeholder="Nombre"
+                    formControlName="nombre"
+                    maxlength="20"
+                    class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+                >
+                <input
+                    type="password"
+                    placeholder="Contraseña"
+                    formControlName="password"
+                    class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+                    autocomplete="off"
+                >
+            </div>
+            <button
+                class="bg-sky-600 text-white px-10 py-2 font-bold rounded-full cursor-pointer not-disabled:active:scale-95
+                    disabled:bg-gray-400 disabled:scale-90 disabled:cursor-no-drop
+                "
+                [disabled]=" formSignUp.invalid "
+            >Registrarse</button>
+
+        </form>
+
+        <!-- Panel Movible -->
+        <div
+            class="absolute w-1/2 h-full bg-sky-600 transition-transform duration-700 text-white text-center overflow-hidden"
+            [class]=" panelLoginActive ? 'translate-x-full':'translate-x-0'"
+        >
+            <!-- Panel Der. Activo -->
+            <div
+                class="flex flex-col gap-2 justify-center items-center h-full px-7 absolute transition-transform duration-700"
+                [class]="panelLoginActive ? 'translate-x-0' : 'translate-x-full'"
+            >
+                <h2 class="text-3xl font-bold flex flex-col gap-1">
+                    <span>¿No tienes una cuenta?</span>
+                    <span>¡Registrate!</span>
+                </h2>
+                <p>Registra tu información para ingresar en el sistema</p>
+
+                <button
+                    class="relative px-10 py-2 ring-2 font-bold ring-white rounded-full mt-7 group overflow-hidden cursor-pointer text-sm"
+                    (click)=" panelLoginActive = false"
+                >
+                    <span class="absolute right-0 translate-y-full group-hover:-translate-y-5 h-15 w-full transition-transform duration-300 ease-linear bg-white"></span>
+                    <span class="relative group-hover:text-sky-600 transition-all duration-300 ease-linear">REGISTRARSE</span>
+                </button>
+            </div>
+
+            <!-- Panel Izq. Activo -->
+            <div
+                class="flex flex-col gap-2 justify-center items-center h-full px-7 absolute transition-transform duration-700"
+                [class]="panelLoginActive ? '-translate-x-full':' translate-x-0' "
+            >
+                <h2 class="text-3xl font-bold flex flex-col gap-1">
+                    <span>¿Ya tienes una cuenta?</span>
+                </h2>
+                <p>Si ya tienes una cuenta, ingresa con tus datos</p>
+
+                <button
+                    class="relative px-10 py-2 ring-2 font-bold ring-white rounded-full mt-7 group overflow-hidden cursor-pointer text-sm"
+                    (click)=" panelLoginActive = true"
+                >
+                    <span class="absolute right-0 translate-y-full group-hover:-translate-y-5 h-15 w-full transition-transform duration-300 ease-linear bg-white"></span>
+                    <span class="relative group-hover:text-sky-600 transition-all duration-300 ease-linear">INGRESAR</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="absolute bottom-0 w-full bg-gray-950 text-white text-center text-xs p-3">
+        <p>Para cualquier duda o aclaración, comuniquese con el equipo de <u>Creacion Atn</u></p>
+    </div>
+</div>
+
+<p-dialog
+    [modal]="true"
+    [(visible)]="dialogVisible"
+    [dismissableMask]="true"
+>
+
+    <div class="font-[Montserrat] text-black px-20 pb-10">
+        
+        <h1 class="text-3xl font-bold mb-10">Actualizar Contraseña</h1>
+
+        <form
+            [formGroup]="formUpdatePass"
+            (submit)=" submitUpdatePass() "
+            class="flex flex-col gap-5"
+        >
+            <input
+                formControlName="empleado"
+                type="number"
+                name="username"
+                placeholder="# Empleado"
+                class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+            >
+
+            <input
+                formControlName="oldPass"
+                type="password"
+                name="old_password"
+                placeholder="Contraseña Actual"
+                autocomplete="off"
+                class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+            >
+
+            <input
+                formControlName="newPass"
+                type="password"
+                name="new_password"
+                placeholder="Contraseña Nueva"
+                autocomplete="off"
+                class="bg-gray-100 px-3 py-2 placeholder:text-sm placeholder:text-gray-500 rounded-sm focus:ring-2 ring-amber-400 outline-none"
+            >
+
+            <div class="flex justify-evenly text-white text-lg">
+                <button
+                    type="submit"
+                    class="rounded-sm bg-sky-500 hover:brightness-90 px-7 py-2 cursor-pointer active:scale-95 transition-transform"
+                >Actualizar</button>
+                <button
+                    (click)="cancelUpdatePass()"
+                    type="reset"
+                    class="rounded-sm bg-gray-400 hover:brightness-90 px-7 py-2 cursor-pointer active:scale-95 transition-transform"
+                >Cancelar</button>
+            </div>
+        </form>
+
+    </div>
+    
+</p-dialog>
+
+
+<p-toast key="loginToastKey" position="top-right" />

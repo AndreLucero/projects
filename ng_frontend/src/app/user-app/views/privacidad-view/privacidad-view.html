@@ -1,0 +1,71 @@
+<div class="flex flex-col gap-8">
+
+    <form
+        [formGroup]="formUpdatePass"
+        (submit)=" handleUpdatePass() "
+        class="flex flex-col gap-8 p-4 rounded-xl bg-linear-240 to-50% shadow text-white"
+        [class]="`from-${userService.userData?.color}-800  to-${userService.userData?.color}-900`"
+    >
+
+        <h3 class="text-lg text-center text-gray-200">Actualizar Contraseña</h3>
+
+        <label>
+            <span class="mx-5">Contraseña Actual:</span>
+            <input
+                formControlName="oldPass"
+                type="password"
+                class="px-3 py-1 outline-0 rounded ring ring-gray-400 focus:ring-white"
+            >
+        </label>
+        
+        <label>
+            <span class="mx-5">Contraseña Nueva:</span>
+            <input
+                formControlName="newPass"
+                type="password"
+                class="px-3 py-1 outline-0 rounded ring ring-gray-400 focus:ring-white"
+            >
+        </label>
+        
+            
+        <div class="flex justify-end mx-10">
+            <button
+                type="submit"
+                class="px-7 py-2 text-white rounded-md cursor-pointer hover:-translate-y-1.5 transition-transform"
+                [class]="` bg-${userService.userData?.color}-500`"
+            >Actualizar</button>
+        </div>
+
+    </form>
+
+    <form
+        [formGroup]=" formPreferences "
+        (submit)=" handleUpdatePreferences() "
+        class="flex flex-col gap-8 p-4 rounded-xl bg-linear-240 to-50% shadow text-white max-h-96 overflow-auto"
+        [class]="`from-${userService.userData?.color}-800  to-${userService.userData?.color}-900`"
+    >
+        <h3 class="text-lg text-center text-gray-200">Preferencias del usuario</h3>
+
+        <label class="flex content-between justify-between">
+            <span class="mx-5">Notificar nuevo mensaje en aplicaciones disponibles:</span>
+            <switch-toggle formControlName="popupMessages" />
+        </label>
+
+        <label class="flex content-between justify-between">
+            <span class="mx-5">Mostrar burbuja en las aplicaciones disponibles:</span>
+            <switch-toggle formControlName="bubbleGeneral" />
+        </label>
+        
+        <div class="flex justify-end mx-10">
+            <button
+                type="submit"
+                class="px-7 py-2 text-white rounded-md cursor-pointer hover:-translate-y-1.5 transition-transform"
+                [class]="` bg-${userService.userData?.color}-500`"
+            >Guardar Cambios</button>
+        </div>
+    </form>
+
+</div>
+
+
+<p-toast key="UserPageToast" />

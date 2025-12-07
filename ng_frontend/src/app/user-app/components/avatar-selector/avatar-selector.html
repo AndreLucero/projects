@@ -1,0 +1,51 @@
+<div class="flex flex-col relative outline-none" tabindex="0" (blur)="elementSelected = false">
+
+    @if( userService.userData?.avatar; as avatar ){
+        <img
+            [src]="`assets/img/avatars/${avatar}`"
+            width="50px"
+            height="50px"
+            [alt]="avatar"
+            class="object-cover rounded-full cursor-pointer ring-2 ring-white select-none"
+            (click)="elementSelected = !elementSelected"
+        >
+
+    }@else {
+        <div
+            (click)="elementSelected = !elementSelected"
+            class="size-[50px] bg-gray-400 rounded-full flex justify-center items-center ring-2 ring-offset-white cursor-pointer select-none"
+            [class]="`bg-${userService.userData?.color}-500`"
+        >
+            <p class="text-black text-xl">{{userService.userData?.alias}}</p>
+        </div>
+    }
+
+    <div
+        class="grid grid-cols-4 gap-3 my-3 overflow-auto rounded-2xl rounded-tl-xs
+                absolute top-12 z-10 transition-all backdrop-brightness-150
+                backdrop-blur-md shadow-2xs shadow-gray-600"
+        [class]=" elementSelected ? `w-64 min-h-14 max-h-64 p-4`:`size-0 p-0`"
+    >
+
+        @for (image of srcImages; track $index) {
+            <img
+                [src]="`assets/img/avatars/${image.src}`"
+                width="50px"
+                height="50px"
+                [alt]="image.src"
+                class="object-cover rounded-full ring-white cursor-pointer select-none hover:ring-2 hover:shadow-lg shadow-gray-400"
+                (click)="setNewAvatar(image.src)"
+            >
+        }
+        
+        <div
+            class="size-12 bg-gray-400 rounded-full flex justify-center items-center ring-offset-white cursor-pointer select-none ring-white hover:ring-2 hover:shadow-lg shadow-gray-400"
+            [class]="`bg-${userService.userData?.color}-500`"
+            (click)="setNewAvatar()"
+        >
+            <p class="text-black text-xl">{{userService.userData?.alias}}</p>
+        </div>
+
+    </div>
+
+</div>

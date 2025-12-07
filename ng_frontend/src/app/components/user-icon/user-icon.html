@@ -1,0 +1,15 @@
+@if( user.avatar; as avatar){
+    <img 
+        [src]="`assets/img/avatars/${avatar}`"
+        [alt]="avatar"
+        class="rounded-full h-full w-full"
+        [title]="user.nombre"
+    >
+}@else {
+    <div
+        class="h-full w-full shadow inset-shadow-sm p-2 rounded-full text-white font-semibold flex items-center justify-center select-none text-xl"
+        [class]="`bg-${user.color}-500`"
+        [title]="user.nombre"
+    >{{ user.alias }}</div>
+
+}

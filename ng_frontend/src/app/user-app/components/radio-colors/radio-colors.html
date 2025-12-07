@@ -1,0 +1,27 @@
+<div class="flex gap-2 flex-wrap w-full">
+
+    @for( color of tailwindColors; track $index){
+
+        <label class="cursor-pointer" [title]="color" class="size-4 inline cursor-pointer group relative mb-1.5">
+
+            <input
+                type="radio"
+                class="hidden peer w-0 h-0"
+                name="radiobutton-colors-tailwindcss"
+                [value]="color"
+                [checked]=" selectedValue === color"
+                (change)=" select(color) "
+            >
+            <div
+                class="size-4 rounded-full peer-checked:ring-2 ring-offset-2 ring-transparent"
+                [class]=" `bg-${color}-500 ring-${color}-500` "
+            ></div>
+            <div class="mt-1.5 group-hover:border-b-2" [class]=" `border-b-${color}-500` "></div>
+
+        </label>
+
+    }
+
+    
+
+</div>

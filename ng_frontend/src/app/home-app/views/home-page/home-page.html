@@ -1,0 +1,56 @@
+<div class="bg-gray-50 dark:bg-gray-800">
+    <div class="relative mb-72">
+        <img src="/assets/img/bg-server_v3.jpg" alt="" class="shadow-xl w-full h-[380px] object-cover object-bottom">
+
+        <div class="absolute w-1/2 left-1/4 -bottom-64 bg-white dark:bg-gray-900 shadow rounded h-80 flex flex-col gap-15 justify-center items-center">
+            
+            <h3 class="text-5xl text-center">Centro de proyectos</h3>
+
+            <div class="w-full flex items-center px-15 gap-3">
+                <label class="flex overflow-hidden ring ring-gray-300 w-full rounded-full p-2 focus-within:ring-gray-400 group">
+                    <svg class="group-focus-within:text-blue-700" width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6"/>
+                    </svg>
+                    <input [(ngModel)]=" inputSearch " type="text" class="grow outline-0 px-1 h-full">
+                </label>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="flex justify-end px-15 my-10 sticky top-12 z-10">
+        <div class="grid gap-2 bg-white dark:bg-gray-950 p-3 shadow rounded">
+            <div class="flex gap-2 items-center">
+                <div class="bg-orange-400 w-8 h-4"></div>
+                <p class="font-extralight  italic">Requiere Inicio de Sesión</p>
+            </div>
+            <div class="flex gap-2 items-center">
+                <div class="bg-blue-400 w-8 h-4"></div>
+                <p class="font-extralight  italic">No requiere Inicio de Sesión</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-15 py-5 grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] gap-5 group">
+        
+        @for (app of getAppsOrdered(); track $index) {
+
+            @if( filterInputSearch( app.path + app.appName) ){
+                
+                @defer (on viewport) {
+                    <card-application-preview [appInformation]=" app " />
+                }@placeholder{
+                    <card-application-preview-skeleton />
+                }@loading(minimum 1s){ 
+                    <!-- Dejo 1 seg para que se pueda visualizar el skeleton -->
+                    <card-application-preview-skeleton />
+                }
+                
+            }
+        }
+
+    </div>
+</div>
+
+<general-speed-dial />

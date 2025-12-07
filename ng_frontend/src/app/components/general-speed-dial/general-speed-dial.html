@@ -1,0 +1,53 @@
+<p-speeddial
+    cdkDrag
+    [cdkDragDisabled]=" !canDrag "
+    [model]="items"
+    direction="up"
+    class="fixed bottom-5 right-5 z-50"
+    [buttonProps]="{ severity: 'help', rounded: true }"
+    [tooltipOptions]="{ tooltipPosition: 'left' }"
+    [cdkContextMenuTriggerFor]="context_menu"
+    [class]="
+        showDial &&
+        ( userService.userData?.preferencias?.bubbleGeneral ?? true )
+        ? '': 'hidden' "
+/>
+<!-- <span class="absolute top-0 text-black z-50 text-2xl z-">bubbleGeneral: {{ userService.userData?.preferencias?.bubbleGeneral }}</span> -->
+
+<ng-template #context_menu>
+    <div class="grid gap-1 z-99 bg-white text-gray-400 w-48 p-1 rounded shadow-lg" cdkMenu>
+        <button
+            cdkMenuItem
+            class="flex justify-between items-center px-1 cursor-pointer hover:bg-red-400 hover:text-white"
+            (cdkMenuItemTriggered)="closeSpeedDial()"
+        >
+            <span>Cerrar Burbuja</span>
+            <i class="pi pi-times"></i>
+        </button>
+
+        @if( canDrag ){
+
+            <button
+                cdkMenuItem
+                class="flex justify-between items-center px-1 cursor-pointer hover:bg-red-400 hover:text-white"
+                (cdkMenuItemTriggered)="canDrag = false"
+            >
+                <span>Deshabilitar Arrastre</span>
+                <i class="pi pi-arrows-alt"></i>
+            </button>
+
+        }@else {
+
+            <button
+                cdkMenuItem
+                class="flex justify-between items-center px-1 cursor-pointer hover:bg-violet-400 hover:text-white"
+                (cdkMenuItemTriggered)="canDrag = true"
+            >
+                <span>Habilitar Arrastre</span>
+                <i class="pi pi-arrows-alt"></i>
+            </button>
+
+        }
+
+    </div>
+</ng-template>

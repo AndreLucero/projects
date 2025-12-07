@@ -1,0 +1,80 @@
+<form
+    [formGroup]="formulario"
+    (submit)="saveUserData()"
+    class="flex rounded-md p-2 hover:ring ring-white"
+>
+    <div class="size-15">
+         <user-icon [user]="user" />
+    </div>
+
+    <div class="grow px-5 flex gap-5">
+        <div class="flex flex-col">
+            <span class="text-xl">{{ user.nombre }}</span>
+            <span class="text-xs">{{ user.id }}</span>
+        </div>
+
+        <div class="flex grow justify-evenly items-center gap-5">
+            <span class="">{{ user.numempleado }}</span>
+            <select
+                formControlName="rolType"
+                class="text-white cursor-pointer rounded outline-0 text-center p-1"
+                [class]="`bg-${userService.userData?.color}-500`"
+            >
+                <option class="bg-gray-300 text-black" value="EJECUTIVO">EJECUTIVO</option>
+                <option class="bg-gray-300 text-black" value="COACH">COACH</option>
+                <option class="bg-gray-300 text-black" value="EJECUTIVO STAFF">EJECUTIVO STAFF</option>
+                <option class="bg-gray-300 text-black" value="SUPERVISOR">SUPERVISOR</option>
+                <option class="bg-gray-300 text-black" value="JEFE">JEFE</option>
+                <option class="bg-gray-300 text-black" value="ANALISTA">ANALISTA</option>
+                <option class="bg-gray-300 text-black" value="ANALISTA CREACION">ANALISTA CREACION</option>
+                <option class="bg-gray-300 text-black" value="JEFE STAFF">JEFE STAFF</option>
+                <option class="bg-gray-300 text-black" value="GERENTE">GERENTE</option>
+                <option class="bg-gray-300 text-black" value="GERENTE ZONA">GERENTE ZONA</option>
+                <option class="bg-gray-300 text-black" value="COORDINADOR">COORDINADOR</option>
+                <option class="bg-gray-300 text-black" value="ADMIN">ADMIN</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="flex justify-center items-center gap-1">
+        <button
+            type="submit"
+            [disabled]="saveDisabled"
+            class="p-1.5 rounded cursor-pointer transition-all flex items-center gap-1
+                disabled:cursor-no-drop disabled:bg-transparent
+                not-disabled:text-gray-100 not-disabled:hover:brightness-110"
+            [class]="`bg-${userService.userData?.color}-500`"
+        >
+            <svg width="25" height="25" viewBox="0 0 448 512">
+                <path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16v320c0 8.8 7.2 16 16 16h320c8.8 0 16-7.2 16-16V173.3c0-4.2-1.7-8.3-4.7-11.3L320 86.6V176c0 17.7-14.3 32-32 32H128c-17.7 0-32-14.3-32-32V80zm80 0v80h128V80zM0 96c0-35.3 28.7-64 64-64h242.7c17 0 33.3 6.7 45.3 18.7l77.3 77.3c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64zm160 224a64 64 0 1 1 128 0a64 64 0 1 1-128 0"/>
+            </svg>
+        </button>
+        <button
+            type="button"
+            (click)=" confirmDelete(user.id) "
+            class="p-1.5 rounded cursor-pointer transition-colors bg-red-500 hover:text-white mx-0.5 w-fit"
+        >
+            <svg width="25" height="25" viewBox="0 0 24 24">
+                <g fill="none">
+                    <path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                    <path fill="currentColor" d="M14.28 2a2 2 0 0 1 1.897 1.368L16.72 5H20a1 1 0 1 1 0 2l-.003.071l-.867 12.143A3 3 0 0 1 16.138 22H7.862a3 3 0 0 1-2.992-2.786L4.003 7.07L4 7a1 1 0 0 1 0-2h3.28l.543-1.632A2 2 0 0 1 9.721 2zm3.717 5H6.003l.862 12.071a1 1 0 0 0 .997.929h8.276a1 1 0 0 0 .997-.929zM10 10a1 1 0 0 1 .993.883L11 11v5a1 1 0 0 1-1.993.117L9 16v-5a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1m.28-6H9.72l-.333 1h5.226z"/>
+                </g>
+            </svg>
+        </button>
+    </div>
+
+</form>
+
+<p-confirm-dialog key="RowUserConfigConfirmation" class="relative">
+    <ng-template #message let-message>
+        
+        <div class="absolute size-25 bg-red-400 brightness-95 rounded-full flex justify-center items-center -top-16 left-1/2 -translate-x-1/2 text-white">
+            <svg width="65" height="65" viewBox="0 0 512 512">
+                <path fill="currentColor" d="M449.07 399.08L278.64 82.58c-12.08-22.44-44.26-22.44-56.35 0L51.87 399.08A32 32 0 0 0 80 446.25h340.89a32 32 0 0 0 28.18-47.17m-198.6-1.83a20 20 0 1 1 20-20a20 20 0 0 1-20 20m21.72-201.15l-5.74 122a16 16 0 0 1-32 0l-5.74-121.95a21.73 21.73 0 0 1 21.5-22.69h.21a21.74 21.74 0 0 1 21.73 22.7Z"/>
+            </svg>
+        </div>
+
+        <span>¿Estás seguro de borrar el usuario <strong>{{ message.message }}</strong>?</span>
+    </ng-template>
+</p-confirm-dialog>

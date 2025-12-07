@@ -1,0 +1,10 @@
+<div class="p-3 text-white grid gap-3">
+
+    @for (kpi of countFinesGestion; track $index) {
+        <div class="bg-verde-agent-call flex justify-between p-4 rounded-xl font-semibold">
+            <span>{{ kpi.name }}</span>
+            <span>{{ kpi.value }}</span>
+        </div>
+    }
+    
+</div>

@@ -1,0 +1,19 @@
+export const {
+    PORT = 3001,
+    MONGO_URL,
+
+    DATABASE_HOST,
+    DATABASE_PORT,
+    DATABASE_NAME,
+    DATABASE_USER,
+    DATABASE_PASS,
+    
+    SALT_ROUNDS = 10,
+
+    JWT_SECRET_KEY,
+
+    SYSTEM_USER_ID,
+    
+    SERVER_FRONTEND,
+    SERVER_THIS
+} = process.env;

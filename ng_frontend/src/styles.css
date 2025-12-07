@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@import '../tailwind.safelist.txt';
+@plugin "tailwindcss-primeui";
+
+@import "primeicons/primeicons.css";
+
+@theme {
+  --color-verde-agent-call: #33d5ad;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+    src: url('/assets/fonts/Montserrat-Light.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 800;
+    src: url('/assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+}

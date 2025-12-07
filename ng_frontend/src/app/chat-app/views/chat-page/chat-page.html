@@ -1,0 +1,31 @@
+<div class="w-dvw h-dvh p-10 rounded bg-white text-black">
+    <div class="bg-linear-to-r from-[#E2EFE1] via-[#E7EEFA] to-[#F0EAF9] rounded-lg h-full min-w-3xl overflow-hidden flex">
+        
+        <!-- LADO IZQUIERDO -->
+        <div class="w-1/3">
+            <side-previewer />
+        </div>
+        <!-- FIN LADO IZQUIERDO -->
+
+        <!-- LADO DERECHO -->
+
+         <div class="w-full">
+             
+            @if( actualConversation.toUpperCase() === 'INVITATIONEXPIRED'){
+                <invitation-expired />
+            }
+            @else if( actualConversation === ''){
+                <new-chat />
+            }@else {
+                <chat-box />
+            }
+
+         </div>
+
+        <!-- FIN LADO DERECHO -->
+
+    </div>
+</div>
+
+<p-toast key="chatPageToast" position="bottom-center" />
+<general-speed-dial />

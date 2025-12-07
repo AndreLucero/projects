@@ -1,0 +1,36 @@
+<div class="flex ">
+    <label class="bg-white rounded-full flex gap-1 text-gray-900 justify-center items-center overflow-hidden">
+        <span
+            class="h-full p-1 text-white"
+            [class]="`bg-${userService.userData?.color}-500`"
+        >
+            <svg width="20px" height="20px" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
+                    <circle cx="10" cy="10" r="7"/>
+                    <path d="m15 15l6 6"/>
+                </g>
+            </svg>
+        </span>
+        <input
+            [(ngModel)]="inputSearch"
+            type="search"
+            class="outline-none me-2"
+        >
+    </label>
+</div>
+
+<div
+    class="flex flex-col gap-2 my-5 p-4 rounded-xl bg-linear-240 to-50% shadow text-gray-200
+        [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+    [class]="`from-${userService.userData?.color}-800  to-${userService.userData?.color}-900`"
+>
+
+    @for(user of allUsersService.allUsers; track $index){
+        @if( filterInputSearch( `${user.numempleado}${user.id}${user.nombre}${user.roltype}` ) ){
+            <row-user-config [user]="user" (rowUserMessage)="setToast( $event )" />
+        }
+    }
+
+</div>
+
+<p-toast key="UserControlViewToast">

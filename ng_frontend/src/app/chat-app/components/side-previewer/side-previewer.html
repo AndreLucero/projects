@@ -1,0 +1,27 @@
+<div class="p-4 shadow h-20">
+    <div class="rounded-full ring-gray-400 w-full flex justify-center items-center bg-white px-4 py-2 shadow gap-2">
+        <svg width="20px" height="20px" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><circle cx="10" cy="10" r="7"/><path d="m15 15l6 6"/></g></svg>
+        <input type="text" placeholder="Buscar Persona" [(ngModel)]="inputSearch" class="w-full focus:outline-0 placeholder:text-gray-400" />
+    </div>
+</div>
+
+<div
+    class="w-full h-full pb-25 overflow-auto
+        [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300
+        active:[&::-webkit-scrollbar-thumb]:bg-violet-300"
+>
+
+    @for (conver of chatService.allConversations; track $index) {
+
+        @if( filterInputSearch( conver.conversationName ) ){
+            <chat-card-previewer
+                [conversation]=" conver "
+                [lastMessage]=" conver.messages.at(-1)?.text "
+            />
+        }
+        
+    }@empty {
+        <p class="text-gray-500 text-center m-4">No participas en ninguna conversación</p>
+    }
+
+</div>
